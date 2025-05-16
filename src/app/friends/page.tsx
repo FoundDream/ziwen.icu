@@ -42,7 +42,7 @@ const Friends = () => {
             variants={fadeInRight}
             className="flex items-center gap-4 p-4 bg-[#efeffe] rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 cursor-pointer"
             onClick={() => {
-              window.open("https://github.com/zjtdzyx", "_blank");
+              window.open("https://zjtdzyx.xyz/", "_blank");
             }}
           >
             <div className="relative w-12 h-12">
