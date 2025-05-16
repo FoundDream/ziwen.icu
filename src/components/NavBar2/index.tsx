@@ -15,6 +15,7 @@ const tabs = [
   { key: "About", label: "About", href: "/about" },
   // { key: "Projects", label: "Projects", href: "/projects" },
   { key: "Contact", label: "Contact", href: "/contact" },
+  { key: "Friends", label: "Friends", href: "/friends" },
 ];
 
 const NavBar2 = () => {

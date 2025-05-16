@@ -7,6 +7,9 @@ const nextConfig: NextConfig = {
       {
         hostname: "zhuwenyu.art",
       },
+      {
+        hostname: "avatars.githubusercontent.com",
+      },
     ],
   },
 };
