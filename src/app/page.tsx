@@ -12,7 +12,7 @@ const Home = () => {
           FrontEnd Developer
         </p>
         <p className={`${dmSerifDisplay.className} text-5xl mt-2 mb-2`}>
-          Hi, I'm Ziwen 👋
+          Hi, I&apos;m Ziwen 👋
         </p>
         <p className={`${dmSerifDisplay.className} text-3xl mb-10`}>
           Welcome to my website
