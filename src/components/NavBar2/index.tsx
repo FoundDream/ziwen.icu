@@ -1,7 +1,9 @@
 "use client";
+import { motion } from "motion/react";
 import { Raleway } from "next/font/google";
 import Link from "next/link";
-import { useState } from "react";
+import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 
 const raleway = Raleway({
   subsets: ["latin"],
@@ -16,22 +18,41 @@ const tabs = [
 ];
 
 const NavBar2 = () => {
+  const pathname = usePathname();
   const [activeTab, setActiveTab] = useState("Home");
+
+  // 根据当前路径更新活动标签
+  useEffect(() => {
+    const currentTab = tabs.find((tab) => tab.href === pathname)?.key || "Home";
+    setActiveTab(currentTab);
+  }, [pathname]);
 
   return (
     <div className="flex gap-4">
       {tabs.map((tab) => {
+        const isActive = activeTab === tab.key;
+
         return (
-          <Link
-            key={tab.key}
-            href={tab.href}
-            className={`${raleway.className} font-semibold ${
-              activeTab === tab.key ? "text-gray-700" : "text-gray-500"
-            }`}
-            onClick={() => setActiveTab(tab.key)}
-          >
-            {tab.label}
-          </Link>
+          <div key={tab.key} className="relative">
+            <Link
+              href={tab.href}
+              className={`${raleway.className} font-semibold ${
+                isActive ? "text-gray-700" : "text-gray-500"
+              } hover:text-gray-700 transition-colors duration-200`}
+              onClick={() => setActiveTab(tab.key)}
+            >
+              {tab.label}
+            </Link>
+            {isActive && (
+              <motion.div
+                className="absolute left-0 right-0 h-0.5 bg-orange-500"
+                layoutId="underline"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.3 }}
+              />
+            )}
+          </div>
         );
       })}
     </div>

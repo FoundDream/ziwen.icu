@@ -1,4 +1,5 @@
 import NavBar2 from "@/components/NavBar2";
+import PageTransition from "@/components/PageTransition";
 import { geistSans } from "@/fonts";
 import type { Metadata } from "next";
 import Image from "next/image";
@@ -31,7 +32,7 @@ export default function RootLayout({
               />
               <NavBar2 />
             </div>
-            {children}
+            <PageTransition>{children}</PageTransition>
           </div>
           <footer className="w-full flex flex-col flex-wrap items-center justify-center py-4 text-xs">
             <p>© 2025 Made with ❤️</p>

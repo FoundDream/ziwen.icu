@@ -1,4 +1,7 @@
+"use client";
 import { dmSerifDisplay, raleway } from "@/fonts";
+import { motion } from "motion/react";
+import { useEffect, useState } from "react";
 
 const educationExperiences = [
   { time: "2023.09 - 2027.06", description: "本科生在读 中央民族大学" },
@@ -48,9 +51,19 @@ const opensourceExperiences = [
   },
 ];
 
+const fadeInUp = {
+  hidden: { opacity: 0, y: 20 },
+  visible: (custom: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { delay: custom * 0.1, duration: 0.4 },
+  }),
+};
+
 const ExperienceCard = ({
   title,
   experiences,
+  customDelay,
 }: {
   title: string;
   experiences: {
@@ -58,9 +71,16 @@ const ExperienceCard = ({
     description?: string;
     award?: string;
   }[];
+  customDelay: number;
 }) => {
   return (
-    <div className="mb-4">
+    <motion.div
+      className="mb-4"
+      initial="hidden"
+      animate="visible"
+      custom={customDelay}
+      variants={fadeInUp}
+    >
       <p className={`${raleway.className} text-l font-[500]`}>{title}</p>
       {experiences.map((experience, index) => (
         <div key={index}>
@@ -71,26 +91,67 @@ const ExperienceCard = ({
           </p>
         </div>
       ))}
-    </div>
+    </motion.div>
   );
 };
 
 const About = () => {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return null;
+
   return (
     <div className="w-full">
-      <p className={`${dmSerifDisplay.className} text-5xl mt-2 mb-4 mt-32`}>
+      <motion.p
+        className={`${dmSerifDisplay.className} text-5xl mt-2 mb-4 mt-32`}
+        initial="hidden"
+        animate="visible"
+        custom={0}
+        variants={fadeInUp}
+      >
         About Me
-      </p>
-      <p className={`${dmSerifDisplay.className} text-l text-orange-500`}>
+      </motion.p>
+      <motion.p
+        className={`${dmSerifDisplay.className} text-l text-orange-500`}
+        initial="hidden"
+        animate="visible"
+        custom={1}
+        variants={fadeInUp}
+      >
         The story of
-      </p>
-      <p className={`${dmSerifDisplay.className} text-2xl mb-4`}>Ziwen</p>
-      <ExperienceCard title="教育经历" experiences={educationExperiences} />
-      <ExperienceCard title="实习经历" experiences={internExperiences} />
-      <ExperienceCard title="获奖经历" experiences={rewardExperiences} />
+      </motion.p>
+      <motion.p
+        className={`${dmSerifDisplay.className} text-2xl mb-4`}
+        initial="hidden"
+        animate="visible"
+        custom={2}
+        variants={fadeInUp}
+      >
+        Ziwen
+      </motion.p>
+      <ExperienceCard
+        title="教育经历"
+        experiences={educationExperiences}
+        customDelay={3}
+      />
+      <ExperienceCard
+        title="实习经历"
+        experiences={internExperiences}
+        customDelay={4}
+      />
+      <ExperienceCard
+        title="获奖经历"
+        experiences={rewardExperiences}
+        customDelay={5}
+      />
       <ExperienceCard
         title="参与过的开源项目"
         experiences={opensourceExperiences}
+        customDelay={6}
       />
     </div>
   );
