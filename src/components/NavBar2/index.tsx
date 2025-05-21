@@ -12,6 +12,7 @@ const raleway = Raleway({
 
 const tabs = [
   { key: "Home", label: "Home", href: "/" },
+  { key: "Posts", label: "Posts", href: "/posts" },
   { key: "About", label: "About", href: "/about" },
   // { key: "Projects", label: "Projects", href: "/projects" },
   { key: "Contact", label: "Contact", href: "/contact" },
