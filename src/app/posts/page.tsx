@@ -15,14 +15,6 @@ const fadeInUp = {
   }),
 };
 
-const fadeIn = {
-  hidden: { opacity: 0 },
-  visible: (custom: number) => ({
-    opacity: 1,
-    transition: { delay: custom * 0.3, duration: 0.6 },
-  }),
-};
-
 // 博客卡片组件
 const PostCard = (post: Post) => {
   return (
