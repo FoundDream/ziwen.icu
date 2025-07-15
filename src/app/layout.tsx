@@ -18,9 +18,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} antialiased bg-[#efefef] text-gray-600`}
+        className={`${geistSans.variable} antialiased bg-[#fafafa] text-gray-600`}
       >
-        <div className="min-h-screen flex flex-col pl-20">
+        <div className="min-h-screen flex flex-col px-25">
           <div className="flex-1 flex min-h-screen relative">
             <div className="flex items-center mt-10 absolute top-0 left-0">
               <Image

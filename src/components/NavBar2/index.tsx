@@ -11,9 +11,8 @@ const raleway = Raleway({
 
 const tabs = [
   { key: "Home", label: "Home", href: "/" },
-  { key: "Posts", label: "Posts", href: "/posts" },
+  { key: "Projects", label: "Projects", href: "/projects" },
   { key: "Contact", label: "Contact", href: "/contact" },
-  { key: "Friends", label: "Friends", href: "/friends" },
 ];
 
 const NavBar2 = () => {
