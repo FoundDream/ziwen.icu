@@ -1,5 +1,4 @@
 "use client";
-import { motion } from "motion/react";
 import { Raleway } from "next/font/google";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -13,8 +12,6 @@ const raleway = Raleway({
 const tabs = [
   { key: "Home", label: "Home", href: "/" },
   { key: "Posts", label: "Posts", href: "/posts" },
-  { key: "About", label: "About", href: "/about" },
-  // { key: "Projects", label: "Projects", href: "/projects" },
   { key: "Contact", label: "Contact", href: "/contact" },
   { key: "Friends", label: "Friends", href: "/friends" },
 ];
@@ -46,12 +43,8 @@ const NavBar2 = () => {
               {tab.label}
             </Link>
             {isActive && (
-              <motion.div
-                className="absolute left-0 right-0 h-0.5 bg-orange-500"
-                layoutId="underline"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.3 }}
+              <div
+                className="absolute left-0 right-0 h-0.5 bg-orange-500 animate-underline"
               />
             )}
           </div>

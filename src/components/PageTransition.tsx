@@ -1,34 +1,33 @@
 "use client";
 
-import { motion } from "motion/react";
 import { usePathname } from "next/navigation";
-import { ReactNode } from "react";
+import { ReactNode, useEffect, useState } from "react";
 
 interface PageTransitionProps {
   children: ReactNode;
 }
 
-const variants = {
-  hidden: { opacity: 0, x: -20, y: 0 },
-  enter: { opacity: 1, x: 0, y: 0 },
-  exit: { opacity: 0, x: 20, y: 0 },
-};
-
 const PageTransition = ({ children }: PageTransitionProps) => {
   const pathname = usePathname();
+  const [isAnimating, setIsAnimating] = useState(false);
+
+  useEffect(() => {
+    setIsAnimating(true);
+    const timer = setTimeout(() => {
+      setIsAnimating(false);
+    }, 50);
+
+    return () => clearTimeout(timer);
+  }, [pathname]);
 
   return (
-    <motion.div
-      key={pathname}
-      initial="hidden"
-      animate="enter"
-      exit="exit"
-      variants={variants}
-      transition={{ type: "tween", ease: "easeInOut", duration: 0.5 }}
-      className="w-full"
+    <div
+      className={`w-full transition-all duration-500 ease-in-out ${
+        isAnimating ? "animate-slideInFromLeft" : ""
+      }`}
     >
       {children}
-    </motion.div>
+    </div>
   );
 };
 
