@@ -11,6 +11,7 @@ const raleway = Raleway({
 
 const tabs = [
   { key: "Home", label: "Home", href: "/" },
+  { key: "Blog", label: "Blog", href: "/blog" },
   { key: "Projects", label: "Projects", href: "/projects" },
   { key: "Contact", label: "Contact", href: "/contact" },
 ];
@@ -21,7 +22,17 @@ const NavBar2 = () => {
 
   // 根据当前路径更新活动标签
   useEffect(() => {
-    const currentTab = tabs.find((tab) => tab.href === pathname)?.key || "Home";
+    let currentTab = "Home";
+    
+    if (pathname.startsWith("/blog")) {
+      currentTab = "Blog";
+    } else {
+      const tab = tabs.find((tab) => tab.href === pathname);
+      if (tab) {
+        currentTab = tab.key;
+      }
+    }
+    
     setActiveTab(currentTab);
   }, [pathname]);
 
