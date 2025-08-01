@@ -20,6 +20,6 @@ export async function GET(
       htmlContent
     });
   } catch (error) {
-    return NextResponse.json({ error: 'Failed to fetch post' }, { status: 500 });
+    return NextResponse.json({ error, message: 'Error fetching blog post' }, { status: 500 });
   }
 }

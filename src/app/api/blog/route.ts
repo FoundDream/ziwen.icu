@@ -6,6 +6,6 @@ export async function GET() {
     const posts = getAllPosts();
     return NextResponse.json(posts);
   } catch (error) {
-    return NextResponse.json({ error: 'Failed to fetch posts' }, { status: 500 });
+    return NextResponse.json({ error, message: 'Failed to fetch posts' }, { status: 500 });
   }
 }
