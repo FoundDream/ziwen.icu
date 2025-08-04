@@ -22,6 +22,24 @@ const projects: Project[] = [
     liveUrl: "https://lose-weight-app.vercel.app/",
     status: "in-progress",
   },
+  {
+    id: 2,
+    title: "音乐展览",
+    description: "一个音乐展览网站，用于收藏/分享自己喜欢的音乐作品",
+    technologies: ["Nextjs", "TypeScript", "TailwindCSS", "React"],
+    githubUrl: "https://github.com/FoundDream/music-player",
+    liveUrl: "https://music-player-chi-rouge.vercel.app/",
+    status: "in-progress",
+  },
+  {
+    id: 3,
+    title: "个人网站",
+    description: "我的个人网站, 用于展示我的作品和技能",
+    technologies: ["Nextjs", "TypeScript", "TailwindCSS", "React"],
+    githubUrl: "https://github.com/FoundDream/ziwen.icu",
+    liveUrl: "https://ziwen.icu/",
+    status: "in-progress",
+  },
 ];
 
 // 项目卡片组件
