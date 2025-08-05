@@ -27,7 +27,7 @@ const projects: Project[] = [
     title: "音乐展览",
     description: "一个音乐展览网站，用于收藏/分享自己喜欢的音乐作品",
     technologies: ["Nextjs", "TypeScript", "TailwindCSS", "React"],
-    githubUrl: "https://github.com/FoundDream/music-player",
+    githubUrl: "https://github.com/FoundDream/audiary",
     liveUrl: "https://music-player-chi-rouge.vercel.app/",
     status: "in-progress",
   },
