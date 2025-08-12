@@ -71,8 +71,9 @@
 }
 
 .animate-slideInFromLeft {
-  animation: slideInFromLeft 0.5s ease-out forwards;
+  animation: slideInFromLeft 0.35s ease-out forwards;
   opacity: 0;
+  will-change: transform, opacity;
 }
 
 .animate-slideInFromRight {
@@ -98,7 +99,8 @@
 
 .project-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04);
 }
 
 /* Blog content styles */
@@ -148,7 +150,8 @@
   color: #ea580c;
 }
 
-.blog-content ul, .blog-content ol {
+.blog-content ul,
+.blog-content ol {
   margin-bottom: 1.5rem;
   padding-left: 1.5rem;
 }
@@ -199,7 +202,8 @@
   margin: 1.5rem 0;
 }
 
-.blog-content th, .blog-content td {
+.blog-content th,
+.blog-content td {
   border: 1px solid #e5e7eb;
   padding: 0.75rem;
   text-align: left;

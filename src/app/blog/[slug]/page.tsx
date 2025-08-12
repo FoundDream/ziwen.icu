@@ -16,7 +16,6 @@ const BlogPostPage = () => {
   const params = useParams();
   const [post, setPost] = useState<BlogPostWithHtml | null>(null);
   const [loading, setLoading] = useState(true);
-  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     const fetchPost = async () => {
@@ -29,7 +28,7 @@ const BlogPostPage = () => {
           setPost(null);
         }
       } catch (error) {
-        console.error('Failed to fetch post:', error);
+        console.error("Failed to fetch post:", error);
         setPost(null);
       } finally {
         setLoading(false);
@@ -39,10 +38,7 @@ const BlogPostPage = () => {
     if (params.slug) {
       fetchPost();
     }
-    setMounted(true);
   }, [params.slug]);
-
-  if (!mounted) return null;
 
   if (loading) {
     return (
@@ -66,7 +62,9 @@ const BlogPostPage = () => {
     return (
       <div className="w-full h-full pt-32 px-8">
         <div className="max-w-4xl mx-auto text-center">
-          <h1 className={`${dmSerifDisplay.className} text-4xl mb-8 text-gray-800`}>
+          <h1
+            className={`${dmSerifDisplay.className} text-4xl mb-8 text-gray-800`}
+          >
             文章未找到
           </h1>
           <Link
@@ -89,8 +87,11 @@ const BlogPostPage = () => {
         >
           ← 返回博客列表
         </Link>
-        
-        <article className="animate-fadeInUp" style={{ animationDelay: '0.1s' }}>
+
+        <article
+          className="animate-fadeInUp"
+          style={{ animationDelay: "0.1s" }}
+        >
           <header className="mb-12">
             <h1
               className={`${dmSerifDisplay.className} text-4xl mb-4 text-gray-800`}
@@ -98,14 +99,14 @@ const BlogPostPage = () => {
               {post.title}
             </h1>
             <p className={`${raleway.className} text-gray-500`}>
-              {new Date(post.date).toLocaleDateString('zh-CN', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
+              {new Date(post.date).toLocaleDateString("zh-CN", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
               })}
             </p>
           </header>
-          
+
           <div
             className={`${raleway.className} prose prose-lg max-w-none blog-content`}
             dangerouslySetInnerHTML={{ __html: post.htmlContent }}

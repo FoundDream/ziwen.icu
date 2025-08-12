@@ -22,7 +22,7 @@ export default function RootLayout({
       >
         <div className="min-h-screen flex flex-col px-25">
           <div className="flex-1 flex min-h-screen relative">
-            <div className="flex items-center mt-10 absolute top-0 left-0">
+            <div className="flex items-center mt-10 absolute top-0 left-0 z-20">
               <Image
                 src="https://zhuwenyu.art/wp-content/uploads/2025/04/cropped-b2fc8d9ad6929863f49572ad703b848-300x220.png"
                 alt="logo"
