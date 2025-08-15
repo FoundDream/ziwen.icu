@@ -1,6 +1,6 @@
 ---
 title: 如何使用 Next.js 和 Marked 搭建轻量级博客系统
-date: 2025-01-27
+date: 2025-07-27
 ---
 
 在现代 Web 开发中，搭建一个高性能、易维护的博客系统并不需要复杂的 CMS 或数据库。本文将详细介绍如何使用 Next.js 15 和 Marked 库，仅通过几个核心依赖就能构建一个功能完整的博客系统。
@@ -8,6 +8,7 @@ date: 2025-01-27
 ## 项目概览
 
 我们将构建一个包含以下功能的博客系统：
+
 - 📝 Markdown 文件管理博客内容
 - 🎨 统一的设计风格和动画效果
 - 📱 响应式设计
@@ -18,27 +19,34 @@ date: 2025-01-27
 ## 技术栈选择
 
 ### 核心框架：Next.js 15
+
 Next.js 是 React 的全栈框架，提供了：
+
 - **服务端渲染 (SSR)**：提升 SEO 和首屏加载速度
 - **静态生成 (SSG)**：预构建页面，性能极佳
 - **API 路由**：内置后端 API 支持
 - **文件系统路由**：基于文件结构的路由系统
 
 ### Markdown 解析：Marked
+
 Marked 是一个快速、轻量的 Markdown 解析器：
+
 - 🚀 高性能：比其他解析器快 2-3 倍
 - 📦 轻量级：gzip 后仅约 20KB
 - 🔧 可扩展：支持自定义渲染器
 - 📝 标准兼容：完全支持 CommonMark 规范
 
 ### 样式方案：Tailwind CSS 4
+
 新一代的 CSS 框架：
+
 - ⚡ 更快的构建速度
 - 🎨 原子化 CSS 类
 - 📱 内置响应式设计
 - 🎯 按需生成，体积更小
 
 ### 字体：Google Fonts
+
 - **Geist Sans**：现代无衬线字体，适合界面
 - **DM Serif Display**：优雅衬线字体，适合标题
 - **Raleway**：清晰易读，适合正文
@@ -95,40 +103,40 @@ pnpm add marked gray-matter
 这是整个博客系统的核心，负责读取和解析 Markdown 文件：
 
 ```typescript
-import fs from 'fs';
-import path from 'path';
-import { marked } from 'marked';
-import matter from 'gray-matter';
+import fs from "fs";
+import path from "path";
+import { marked } from "marked";
+import matter from "gray-matter";
 
 export interface BlogPost {
-  slug: string;      // 文章标识符
-  title: string;     // 文章标题
-  date: string;      // 发布日期
-  content: string;   // 原始内容
-  excerpt?: string;  // 文章摘要
+  slug: string; // 文章标识符
+  title: string; // 文章标题
+  date: string; // 发布日期
+  content: string; // 原始内容
+  excerpt?: string; // 文章摘要
 }
 
-const postsDirectory = path.join(process.cwd(), 'posts');
+const postsDirectory = path.join(process.cwd(), "posts");
 
 // 获取所有博客文章
 export function getAllPosts(): BlogPost[] {
   const fileNames = fs.readdirSync(postsDirectory);
   const allPostsData = fileNames
-    .filter((fileName) => fileName.endsWith('.md'))
+    .filter((fileName) => fileName.endsWith(".md"))
     .map((fileName) => {
-      const slug = fileName.replace(/\.md$/, '');
+      const slug = fileName.replace(/\.md$/, "");
       const fullPath = path.join(postsDirectory, fileName);
-      const fileContents = fs.readFileSync(fullPath, 'utf8');
-      
+      const fileContents = fs.readFileSync(fullPath, "utf8");
+
       // 解析 frontmatter
       const matterResult = matter(fileContents);
-      
+
       return {
         slug,
         title: matterResult.data.title || slug,
-        date: matterResult.data.date || '',
+        date: matterResult.data.date || "",
         content: matterResult.content,
-        excerpt: matterResult.content.substring(0, 200) + '...'
+        excerpt: matterResult.content.substring(0, 200) + "...",
       };
     });
 
@@ -146,14 +154,14 @@ export function getAllPosts(): BlogPost[] {
 export function getPostBySlug(slug: string): BlogPost | null {
   try {
     const fullPath = path.join(postsDirectory, `${slug}.md`);
-    const fileContents = fs.readFileSync(fullPath, 'utf8');
-    
+    const fileContents = fs.readFileSync(fullPath, "utf8");
+
     const matterResult = matter(fileContents);
-    
+
     return {
       slug,
       title: matterResult.data.title || slug,
-      date: matterResult.data.date || '',
+      date: matterResult.data.date || "",
       content: matterResult.content,
     };
   } catch (error) {
@@ -172,15 +180,18 @@ export async function markdownToHtml(markdown: string): Promise<string> {
 #### 博客列表 API (`src/app/api/blog/route.ts`)
 
 ```typescript
-import { getAllPosts } from '@/lib/blog';
-import { NextResponse } from 'next/server';
+import { getAllPosts } from "@/lib/blog";
+import { NextResponse } from "next/server";
 
 export async function GET() {
   try {
     const posts = getAllPosts();
     return NextResponse.json(posts);
   } catch (error) {
-    return NextResponse.json({ error: 'Failed to fetch posts' }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to fetch posts" },
+      { status: 500 }
+    );
   }
 }
 ```
@@ -188,8 +199,8 @@ export async function GET() {
 #### 单篇文章 API (`src/app/api/blog/[slug]/route.ts`)
 
 ```typescript
-import { getPostBySlug, markdownToHtml } from '@/lib/blog';
-import { NextRequest, NextResponse } from 'next/server';
+import { getPostBySlug, markdownToHtml } from "@/lib/blog";
+import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
   request: NextRequest,
@@ -199,20 +210,23 @@ export async function GET(
     // Next.js 15 需要 await params
     const { slug } = await params;
     const post = getPostBySlug(slug);
-    
+
     if (!post) {
-      return NextResponse.json({ error: 'Post not found' }, { status: 404 });
+      return NextResponse.json({ error: "Post not found" }, { status: 404 });
     }
 
     // 将 Markdown 转换为 HTML
     const htmlContent = await markdownToHtml(post.content);
-    
+
     return NextResponse.json({
       ...post,
-      htmlContent
+      htmlContent,
     });
   } catch (error) {
-    return NextResponse.json({ error: 'Failed to fetch post' }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to fetch post" },
+      { status: 500 }
+    );
   }
 }
 ```
@@ -235,14 +249,14 @@ const BlogPage = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await fetch('/api/blog');
+        const response = await fetch("/api/blog");
         const data = await response.json();
         setPosts(data);
       } catch (error) {
-        console.error('Failed to fetch posts:', error);
+        console.error("Failed to fetch posts:", error);
       }
     };
-    
+
     fetchPosts();
     setMounted(true);
   }, []);
@@ -252,10 +266,12 @@ const BlogPage = () => {
   return (
     <div className="w-full h-full pt-32 px-8">
       <div className="max-w-4xl mx-auto">
-        <h1 className={`${dmSerifDisplay.className} text-4xl mb-12 text-gray-800 animate-fadeInUp`}>
+        <h1
+          className={`${dmSerifDisplay.className} text-4xl mb-12 text-gray-800 animate-fadeInUp`}
+        >
           Blog
         </h1>
-        
+
         <div className="space-y-8">
           {posts.map((post, index) => (
             <article
@@ -264,23 +280,27 @@ const BlogPage = () => {
               style={{ animationDelay: `${index * 0.1}s` }}
             >
               <Link href={`/blog/${post.slug}`} className="group">
-                <h2 className={`${dmSerifDisplay.className} text-2xl mb-3 text-gray-800 group-hover:text-orange-500 transition-colors duration-200`}>
+                <h2
+                  className={`${dmSerifDisplay.className} text-2xl mb-3 text-gray-800 group-hover:text-orange-500 transition-colors duration-200`}
+                >
                   {post.title}
                 </h2>
               </Link>
-              
+
               <p className={`${raleway.className} text-sm text-gray-500 mb-3`}>
-                {new Date(post.date).toLocaleDateString('zh-CN', {
-                  year: 'numeric',
-                  month: 'long',
-                  day: 'numeric'
+                {new Date(post.date).toLocaleDateString("zh-CN", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
                 })}
               </p>
-              
-              <p className={`${raleway.className} text-gray-600 leading-relaxed`}>
+
+              <p
+                className={`${raleway.className} text-gray-600 leading-relaxed`}
+              >
                 {post.excerpt}
               </p>
-              
+
               <Link
                 href={`/blog/${post.slug}`}
                 className={`${raleway.className} inline-block mt-4 text-orange-500 hover:text-orange-600 font-medium transition-colors duration-200`}
@@ -329,7 +349,7 @@ const BlogPostPage = () => {
           setPost(data);
         }
       } catch (error) {
-        console.error('Failed to fetch post:', error);
+        console.error("Failed to fetch post:", error);
       } finally {
         setLoading(false);
       }
@@ -354,17 +374,19 @@ const BlogPostPage = () => {
         <Link href="/blog" className="text-orange-500 hover:text-orange-600">
           ← 返回博客列表
         </Link>
-        
+
         <article className="animate-fadeInUp">
           <header className="mb-12">
-            <h1 className={`${dmSerifDisplay.className} text-4xl mb-4 text-gray-800`}>
+            <h1
+              className={`${dmSerifDisplay.className} text-4xl mb-4 text-gray-800`}
+            >
               {post.title}
             </h1>
             <p className={`${raleway.className} text-gray-500`}>
-              {new Date(post.date).toLocaleDateString('zh-CN')}
+              {new Date(post.date).toLocaleDateString("zh-CN")}
             </p>
           </header>
-          
+
           <div
             className="blog-content"
             dangerouslySetInnerHTML={{ __html: post.htmlContent }}
@@ -472,7 +494,7 @@ const tabs = [
 // 智能路径匹配
 useEffect(() => {
   let currentTab = "Home";
-  
+
   if (pathname.startsWith("/blog")) {
     currentTab = "Blog";
   } else {
@@ -481,7 +503,7 @@ useEffect(() => {
       currentTab = tab.key;
     }
   }
-  
+
   setActiveTab(currentTab);
 }, [pathname]);
 ```
@@ -490,7 +512,7 @@ useEffect(() => {
 
 博客文章使用标准的 Markdown 格式，包含 frontmatter：
 
-```markdown
+````markdown
 ---
 title: 文章标题
 date: 2025-01-27
@@ -507,11 +529,13 @@ date: 2025-01-27
 
 ```javascript
 // 代码块示例
-console.log('Hello World');
+console.log("Hello World");
 ```
+````
 
 > 引用块示例
-```
+
+````
 
 ## 性能优化策略
 
@@ -540,9 +564,10 @@ npm i -g vercel
 
 # 部署
 vercel --prod
-```
+````
 
 ### 自定义服务器
+
 ```bash
 # 构建项目
 pnpm build
@@ -554,18 +579,20 @@ pnpm start
 ## 扩展功能
 
 ### 1. 搜索功能
+
 可以添加基于 Fuse.js 的客户端搜索：
 
 ```typescript
-import Fuse from 'fuse.js';
+import Fuse from "fuse.js";
 
 const fuse = new Fuse(posts, {
-  keys: ['title', 'content'],
-  threshold: 0.3
+  keys: ["title", "content"],
+  threshold: 0.3,
 });
 ```
 
 ### 2. 标签系统
+
 在 frontmatter 中添加标签：
 
 ```markdown
@@ -577,6 +604,7 @@ tags: [nextjs, react, markdown]
 ```
 
 ### 3. RSS 订阅
+
 生成 RSS feed：
 
 ```typescript
@@ -584,10 +612,10 @@ tags: [nextjs, react, markdown]
 export async function GET() {
   const posts = getAllPosts();
   const rss = generateRSS(posts);
-  
+
   return new Response(rss, {
     headers: {
-      'Content-Type': 'application/xml',
+      "Content-Type": "application/xml",
     },
   });
 }
@@ -608,4 +636,4 @@ export async function GET() {
 
 ---
 
-*本文展示了如何用最少的依赖构建现代化的博客系统。如果你有任何问题或建议，欢迎在评论区讨论！*
+_本文展示了如何用最少的依赖构建现代化的博客系统。如果你有任何问题或建议，欢迎在评论区讨论！_
